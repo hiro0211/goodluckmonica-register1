@@ -138,7 +138,7 @@ public class MemberDAO {
      * @throws SQLException
      *             SQL例外
  ]    */
-    public void insertMember(Member member) throws SQLException {
+    public void registerMember(Member member) throws SQLException {
         // SQL文の準備
         String sql = "INSERT INTO member(memberid, password, membername, gender,"
             + "address, phone, memberpoint) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -236,4 +236,5 @@ public class MemberDAO {
             }
         }
     }
+
 }
