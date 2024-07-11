@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import jp.co.flm.market.common.MarketBusinessException;
 import jp.co.flm.market.common.MarketSystemException;
 import jp.co.flm.market.entity.Member;
 

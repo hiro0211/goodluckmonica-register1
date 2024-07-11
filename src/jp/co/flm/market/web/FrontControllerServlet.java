@@ -72,8 +72,8 @@ public class FrontControllerServlet extends HttpServlet {
         }
         switch (flag) {
             case "TOP":
-                CommonAction commonAction = new CommonAction();
-                page = commonAction.execute(request);
+                CommonShowTopPageAction commonShowTopPageAction = new CommonShowTopPageAction();
+                page = commonShowTopPageAction.execute(request);
                 break;
             case "CommonLogin":
                 CommonLoginAction commonLoginAction = new CommonLoginAction();

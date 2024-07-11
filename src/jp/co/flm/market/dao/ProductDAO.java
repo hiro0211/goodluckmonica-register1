@@ -45,8 +45,58 @@ public class ProductDAO {
      * @throws SQLException
      *             SQL例外
      */
-    public ArrayList<Product> getProductsByCategoryId(String categoryId) throws SQLException {
-        return null;
+    public ArrayList<Product> showCategory(String categoryId) throws SQLException {
+        //複数のproductオブジェクトを集約：戻り値の準備
+        ArrayList<Product>productlist = new ArrayList<>();
+        Product product = null;
+        Stock stock = null;
+        Category category = null;
+
+      //SQL文
+        String sql = "SELECT categoryname, product.productid, productname, price, quantity "
+            + "FROM product INNER JOIN category "
+            + "ON product.categoryid = category.categoryid "
+            + "INNER JOIN stock "
+            + "ON product.productid =stock.productid "
+            + "WHERE categoryid=? ";
+        ResultSet res = null;
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, categoryId);
+           //SQL文実行
+            res = stmt.executeQuery();
+
+            while (res.next()) {
+                product = new Product();
+                product.setProductId(res.getString("productid"));
+                product.setProductName(res.getString("productname"));
+                product.setPrice(res.getInt("price"));
+
+                stock = new Stock();
+                stock.setQuantity(res.getInt("quantity"));
+                product.setStock(stock);
+
+                category = new Category();
+                category.setCategoryName(res.getString("categoryname"));
+                product.setCategory(category);
+
+                productlist.add(product);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }finally {
+            if (res != null) {
+                res.close();
+            }
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+        return productlist;
     }
 
     /**
@@ -58,7 +108,57 @@ public class ProductDAO {
      * @throws SQLException
      *             SQL例外
      */
-    public Product getProduct(String productId) throws SQLException {
-        return null;
+    public Product showProduct(String productId) throws SQLException {
+        //戻り値準備
+        Product product = null;
+        Stock stock = null;
+        Category category = null;
+
+        //SQL文
+        String sql = "SELECT category.categoryid, categoryname, product.picture, "
+            + "product.productid, productname, price, quantity "
+            + "FROM product INNER JOIN category "
+            + "ON product.categoryid = category.categoryid "
+            + "INNER JOIN stock "
+            + "ON product.productid =stock.productid "
+            + "WHERE productid=? ";
+        PreparedStatement stmt = null;
+        ResultSet res = null;
+
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, productId);
+            //SQL文を実行する。
+            res = stmt.executeQuery();
+            if (res.next()) {
+                // 商品情報を作成する。
+                product = new Product();
+                product.setProductId(res.getString("picture"));
+                product.setProductId(res.getString("productid"));
+                product.setProductName(res.getString("productname"));
+                product.setPrice(res.getInt("price"));
+
+                stock = new Stock();
+                stock.setQuantity(res.getInt("quantity"));
+                product.setStock(stock);
+
+                category = new Category();
+                category.setCategoryName(res.getString("categoryname"));
+                category.setCategoryId(res.getString("categoryid"));
+                product.setCategory(category);
+            }
+    }catch (SQLException e) {
+        e.printStackTrace();
+        throw e;
+    } finally {
+        if (res != null) {
+            res.close();
+        }
+        if (stmt != null) {
+            stmt.close();
+        }
+    }
+
+    return product;
     }
 }

@@ -41,7 +41,36 @@ public class CategoryDAO {
      * @throws SQLException
      *             SQL例外
      */
-    public ArrayList<Category> getAllCategories() throws SQLException {
-        return null;
+    public ArrayList<Category> returnTop() throws SQLException {
+        // カテゴリ情報を格納するリスト
+        ArrayList<Category> categoryList = new ArrayList<Category>();
+        // SQLクエリ
+        String sql = "SELECT categoryname, picture FROM category ORDER BY categoryid DESC";
+        ResultSet res = null;
+        PreparedStatement stmt = null;
+
+        // SQL文の実行と結果セットの処理
+        try {
+            stmt = con.prepareStatement(sql);
+            res = stmt.executeQuery();
+            while (res.next()) {
+             // Categoryオブジェクトを作成し、結果セットから情報を設定
+                Category category = new Category();
+                category.setPicture(res.getString("picture"));
+                category.setCategoryName(res.getString("categoryname"));
+                // Categoryオブジェクトをリストに追加
+                categoryList.add(category);
+            }
+        } finally {
+            if (res != null) {
+                res.close();
+            }
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+
+        // カテゴリリストを返す
+        return categoryList;
     }
 }

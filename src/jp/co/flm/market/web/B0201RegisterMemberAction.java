@@ -15,26 +15,24 @@ public class B0201RegisterMemberAction {
         HttpSession session = req.getSession(true);
 
         try {
-            String memberId = (String) session.getAttribute("memberId");
-            String memberName = req.getParameter("memberName");
-            String gender = req.getParameter("gender");
-            String address = req.getParameter("address");
-            String phone = req.getParameter("phone");
-            String password = req.getParameter("password");
-
+//            String memberId = (String) session.getAttribute("memberId");
+//            String memberName = req.getParameter("memberName");
+//            String gender = req.getParameter("gender");
+//            String address = req.getParameter("address");
+//            String phone = req.getParameter("phone");
+//            String password = req.getParameter("password");
+            Member member = (Member) session.getAttribute("member");
 
             RegisterMemberLogic logic= new RegisterMemberLogic();
-            Member member = new Member();
-            member.setMemberName(memberName);
-            member.setAddress(address);
-            member.setPhone(phone);
-            member.setPassword(password);
-            member.setGender(gender);
-            member.setMemberId(memberId);
+//            member.setMemberName(memberName);
+//            member.setAddress(address);
+//            member.setPhone(phone);
+//            member.setPassword(password);
+//            member.setGender(gender);
+//            member.setMemberId(memberId);
 
             logic.registerMember(member);
             req.setAttribute("member", member);
-            // ("message", "以下の内容で登録を行いました！");
             page = "/member-register-result-view.jsp";
 
         } catch (MarketSystemException e) {
