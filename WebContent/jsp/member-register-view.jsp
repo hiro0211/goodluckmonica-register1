@@ -28,46 +28,45 @@
 
 
 <form method="post" action="${pageContext.request.contextPath}/mserv" id="chkForm">
-			<table>
-				<tr>
-					<td>名前</td>
-					<td><input type="text" name="membername" id="membername" size="10"></td>
-				</tr>
-				<tr>
-					<td>性別</td>
-					<td>
-					<label for="male">男性</label>
-    <input type="radio" id="male" name="gender" value="male">
+	<table>
+		<tr>
+			<td>名前</td>
+			<td><input type="text" name="memberName" id="memberName" size="10"></td>
+		</tr>
+		<tr>
+			<td>性別</td>
+			<td>
+				<label for="male">男性</label>
+	  			<input type="radio" id="male" name="gender" value="male">
 
-   					 <label for="female">女性</label>
-    <input type="radio" id="female" name="gender" value="female">
+	 			<label for="female">女性</label>
+	  			<input type="radio" id="female" name="gender" value="female">
 
-    				<label for="other">その他</label>
-    <input type="radio" id="other" name="gender" value="other">
-    				</td>
-				</tr>
-				<tr>
-					<td>住所</td>
-					<td><input type="text" name="address" id="address"
-						size="10"></td>
-				</tr>
-				<tr>
-					<td>電話番号</td>
-					<td><input type="text" name="phone" id="phone"
-						size="10"></td>
-				</tr>
-				<tr>
-					<td>パスワード</td>
-					<td><input type="password" name="password" id="password"
-						size="10"></td>
-				</tr>
-			</table>
-			<br> <input type="hidden" name="flag" value="B0201CheckMember">
-			<input type="submit" value="確認">
+	  				<label for="other">その他</label>
+	  				<input type="radio" id="other" name="gender" value="other">
+  			</td>
+		</tr>
+		<tr>
+			<td>住所</td>
+			<td><input type="text" name="address" id="address"
+				size="20"></td>
+		</tr>
+		<tr>
+			<td>電話番号</td>
+			<td><input type="text" name="phone" id="phone"
+				size="10"></td>
+		</tr>
+		<tr>
+			<td>パスワード</td>
+			<td><input type="password" name="password" id="password"
+				size="10"></td>
+		</tr>
+	</table>
+	<br> <input type="hidden" name="flag" value="B0201CheckMemberAction">
+	<input type="submit" value="確認">
 </form>
-
 			<p>
-			<a href="${pageContext.request.contextPath}/mserv">[トップに戻る]</a>
+				<a href="${pageContext.request.contextPath}/mserv">[トップに戻る]</a>
 			</p>
 		<%-- contents end --%>
 	</div>

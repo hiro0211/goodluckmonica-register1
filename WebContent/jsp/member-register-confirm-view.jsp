@@ -52,7 +52,7 @@
                 </tr>
             </table>
             <br>
-            <input type="hidden" name="flag" value="B0302ConfirmRegistration">
+            <input type="hidden" name="flag" value="B0201RegisterMemberAction">
             <input type="submit" value="登録">
             <input type="button" value="修正" onclick="history.back()">
         </form>
