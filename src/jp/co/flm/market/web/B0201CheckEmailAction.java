@@ -71,10 +71,14 @@ public class B0201CheckEmailAction {
                logic.getMember(memberId); //getMember(業務Logic)メソッドに戻り値ない
 
                //セッションを取得する。
-               HttpSession session = req.getSession(false); //セッションがない場合は何もしない（絶対新規作成されてるはずなのでTrue指定しない）
+             //セッションがない場合は何もしない（絶対新規作成されてるはずなのでTrue指定しない)
+               HttpSession session = req.getSession(false);
 
                //メールアドレスをセッションへ格納する。
-               session.setAttribute("Member", memberId);
+               Member member = new Member();
+               member.setMemberId(memberId);
+               // セッションに格納
+               session.setAttribute("member", member);
 
                page="member-register-view.jsp";
 

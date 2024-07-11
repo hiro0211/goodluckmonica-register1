@@ -15,13 +15,13 @@ public class B0201RegisterMemberAction {
         HttpSession session = req.getSession(true);
 
         try {
-//            String memberId = (String) session.getAttribute("memberId");
+            Member member = (Member) session.getAttribute("member");
+//            String memberId = member.getMemberId();
 //            String memberName = req.getParameter("memberName");
 //            String gender = req.getParameter("gender");
 //            String address = req.getParameter("address");
 //            String phone = req.getParameter("phone");
 //            String password = req.getParameter("password");
-            Member member = (Member) session.getAttribute("member");
 
             RegisterMemberLogic logic= new RegisterMemberLogic();
 //            member.setMemberName(memberName);

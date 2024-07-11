@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.mysql.cj.Session;
+
 import jp.co.flm.market.common.MarketSystemException;
 import jp.co.flm.market.entity.Member;
 
@@ -13,6 +15,7 @@ import jp.co.flm.market.entity.Member;
 public class B0201CheckMemberAction {
     // pageを初期化
     String page = null;
+
 
     public void checkSession(HttpServletRequest req) throws MarketSystemException {
         HttpSession session = req.getSession(false);
@@ -37,15 +40,15 @@ public class B0201CheckMemberAction {
         String password = req.getParameter("password");
 
         //必須項目が空ではないか確認
-        if (memberName == null || memberName.trim().isEmpty())
+        if (memberName == null)
             errorMessages.add("名前は入力必須項目です。");
-        if (gender == null || gender.trim().isEmpty())
+        if (gender == null )
             errorMessages.add("性別は入力必須項目です。");
-        if (address == null || address.trim().isEmpty())
+        if (address == null )
             errorMessages.add("住所は入力必須項目です。");
-        if (phone == null || phone.trim().isEmpty())
+        if (phone == null )
             errorMessages.add("電話番号は入力必須項目です。");
-        if (password == null || password.trim().isEmpty())
+        if (password == null )
             errorMessages.add("パスワードは入力必須項目です。");
 
         // 文字数の確認を行う。
@@ -58,7 +61,7 @@ public class B0201CheckMemberAction {
         if (password != null && (password.length() < 8 || password.length() > 20))
             errorMessages.add("パスワードは8〜20文字で入力してください。");
 
-        //エラーメッセージがあった場合、もう一度登録画面に遷移すｒ
+        //エラーメッセージがあった場合、もう一度登録画面に遷移す
         if (!errorMessages.isEmpty()) {
             req.setAttribute("errorMessageList", errorMessages);
             page = "/member-register-view.jsp";
@@ -71,7 +74,8 @@ public class B0201CheckMemberAction {
         try {
             // セッションを確認
             checkSession(req);
-
+            // セッションを作成
+            HttpSession session = req.getSession(false);
             // validateメソッドの入力値を検証する
             page = validate(req);
 
@@ -82,17 +86,18 @@ public class B0201CheckMemberAction {
                 String address = req.getParameter("address");
                 String phone = req.getParameter("phone");
                 String password = req.getParameter("password");
+                Member member = (Member) session.getAttribute("member");
+                String memberId = member.getMemberId();
 
                 // Memberオブジェクトを作成し値を設定する
-                Member member = new Member();
                 member.setMemberName(memberName);
                 member.setGender(gender);
                 member.setAddress(address);
                 member.setPhone(phone);
                 member.setPassword(password);
+//             member.setMemberId(memberId);
 
                 // セッションに会員情報を保存する
-                HttpSession session = req.getSession();
                 session.setAttribute("member", member);
 
                 // 確認画面へ遷移する
