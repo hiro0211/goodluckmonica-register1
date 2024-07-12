@@ -33,6 +33,9 @@ public class B0201RegisterMemberAction {
 
             logic.registerMember(member);
             req.setAttribute("member", member);
+
+            //会員登録が成功したらセッション情報を削除
+            session.removeAttribute("member");
             page = "/member-register-result-view.jsp";
 
         } catch (MarketSystemException e) {

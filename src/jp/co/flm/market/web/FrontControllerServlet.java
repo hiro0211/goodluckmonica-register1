@@ -71,10 +71,10 @@ public class FrontControllerServlet extends HttpServlet {
             flag = "TOP";
         }
         switch (flag) {
-            case "TOP":
-                CommonShowTopPageAction commonShowTopPageAction = new CommonShowTopPageAction();
-                page = commonShowTopPageAction.execute(request);
-                break;
+//            case "TOP":
+//                CommonShowTopPageAction commonShowTopPageAction = new CommonShowTopPageAction();
+//                page = commonShowTopPageAction.execute(request);
+//                break;
             case "CommonLogin":
                 CommonLoginAction commonLoginAction = new CommonLoginAction();
                 page = commonLoginAction.execute(request);
