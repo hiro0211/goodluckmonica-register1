@@ -144,7 +144,7 @@ public class ShoppingCartLogic {
 
             ProductDAO pdao = new ProductDAO(con);
             // 商品IDにより商品情報を検索する。
-            product = pdao.getProduct(productId);
+            product = pdao.showProduct(productId);
 
             if (product == null) {
                 throw new MarketSystemException("対象の商品は現在ありません。");

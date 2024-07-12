@@ -71,10 +71,10 @@ public class FrontControllerServlet extends HttpServlet {
             flag = "TOP";
         }
         switch (flag) {
-//            case "TOP":
-//                CommonShowTopPageAction commonShowTopPageAction = new CommonShowTopPageAction();
-//                page = commonShowTopPageAction.execute(request);
-//                break;
+            case "TOP":
+                CommonShowTopPageAction commonShowTopPageAction = new CommonShowTopPageAction();
+                page = commonShowTopPageAction.execute(request);
+                break;
             case "CommonLogin":
                 CommonLoginAction commonLoginAction = new CommonLoginAction();
                 page = commonLoginAction.execute(request);
@@ -91,11 +91,10 @@ public class FrontControllerServlet extends HttpServlet {
                 B0102GoShoppingAction b0102GoShoppingAction = new B0102GoShoppingAction();
                 page = b0102GoShoppingAction.execute(request);
                 break;
-            case "B0102LoginShopping":
-                // B0102LoginShoppingAction b0102LoginShoppingAction = new
-                // B0102LoginShoppingAction();
-                // page = b0102LoginShoppingAction.execute(request);
-                break;
+//            case "B0102LoginShopping":
+//                 B0102LoginShoppingAction b0102LoginShoppingAction = new B0102LoginShoppingAction();
+//                 page = b0102LoginShoppingAction.execute(request);
+//                break;
             case "B0202LoginMember":
                 B0202LoginMemberAction b0202LoginMemberAction = new B0202LoginMemberAction();
                 page = b0202LoginMemberAction.execute(request);

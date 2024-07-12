@@ -53,7 +53,7 @@ public class B0201CheckMemberAction {
 
         // 文字数の確認を行う。
         if (memberName != null && (memberName.length() < 1 || memberName.length() > 50))
-            errorMessages.add("名前は1〜50文字で入力してください。");
+            errorMessages.add("名前は40文字で入力してください。");
         if (address != null && (address.length() < 1 || address.length() > 100))
             errorMessages.add("住所は1〜100文字で入力してください。");
         if (phone != null && (phone.length() < 1 || phone.length() > 20))
@@ -87,7 +87,7 @@ public class B0201CheckMemberAction {
                 String phone = req.getParameter("phone");
                 String password = req.getParameter("password");
                 Member member = (Member) session.getAttribute("member");
-                String memberId = member.getMemberId();
+//                String memberId = member.getMemberId();
 
                 // Memberオブジェクトを作成し値を設定する
                 member.setMemberName(memberName);

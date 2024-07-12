@@ -30,13 +30,13 @@ public class CommonShowTopPageAction {
     public String execute(HttpServletRequest req) {
         String page = null;
         try {
-         // 得意先検索用の業務Controllerを生成し、メソッドを呼び出す。
+         // TOP表示の業務Controllerを生成し、メソッドを呼び出す。
             CommonShowTopPageLogic logic = new CommonShowTopPageLogic();
             ArrayList<Category> categoryList = logic.returnTop();
          // 検索結果をリクエストスコープに設定する。
             req.setAttribute("categoryList", categoryList);
          // 結果画面を戻り値に設定する。
-            page = "/top-view.jsp";
+            page = "top-view.jsp";
         } catch(MarketSystemException e) {
             // エラーメッセージを取得する。
                String errorMessage = e.getMessage();
