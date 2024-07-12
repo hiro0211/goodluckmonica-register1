@@ -52,14 +52,14 @@ public class B0201CheckMemberAction {
             errorMessages.add("パスワードは入力必須項目です。");
 
         // 文字数の確認を行う。
-        if (memberName != null && (memberName.length() < 1 || memberName.length() > 50))
+        if (memberName != null && (memberName.length() <= 40))
             errorMessages.add("名前は40文字で入力してください。");
-        if (address != null && (address.length() < 1 || address.length() > 100))
-            errorMessages.add("住所は1〜100文字で入力してください。");
-        if (phone != null && (phone.length() < 1 || phone.length() > 20))
+        if (address != null && (address.length() <= 80 ));
+            errorMessages.add("住所は80字以内で入力してください。");
+        if (phone != null && (phone.length() <= 1 || phone.length() >= 20))
             errorMessages.add("電話番号は1〜20文字で入力してください。");
-        if (password != null && (password.length() < 8 || password.length() > 20))
-            errorMessages.add("パスワードは8〜20文字で入力してください。");
+        if (password != null && (password.length() <= 4 || password.length() >= 8))
+            errorMessages.add("パスワードは4文字以上8文字以内で入力してください。");
 
         //エラーメッセージがあった場合、もう一度登録画面に遷移す
         if (!errorMessages.isEmpty()) {

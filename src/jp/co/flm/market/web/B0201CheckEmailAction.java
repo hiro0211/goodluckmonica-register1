@@ -56,9 +56,7 @@ public class B0201CheckEmailAction {
     public String execute(HttpServletRequest req) {
 
         String page = null;
-
         checkSession(req); //15行目で定義したメソッドを実行　この段階でセッションは新規作成されているはず
-
         page = validate(req);
 
         if(page == null) {     //pageがnullの時はエラーが起きていない状態
@@ -83,15 +81,12 @@ public class B0201CheckEmailAction {
                page="member-register-view.jsp";
 
                }catch(MarketBusinessException e) {
-                   //エラーメッセージを取得する。
-                   String errorMessage = e.getMessage();
 
                    //リクエストスコープへエラーメッセージを格納する。
                    ArrayList<String> errorMessageList = new ArrayList<String>();
-                   errorMessageList.add(errorMessage);
+                   errorMessageList.add(e.getMessage());
                    req.setAttribute("errorMessageList", errorMessageList);
-
-                   page = "member-register-view.jsp";
+                   page = "email-register-view.jsp";
 
                }catch(MarketSystemException e) {
                  //エラーメッセージを取得する。
