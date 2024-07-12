@@ -46,10 +46,10 @@
                     <td>電話番号</td>
                     <td><c:out value="${member.phone}" /></td>
                 </tr>
-                <tr>
-                    <td>メールアドレス</td>
-                    <td><c:out value="${member.memberId}" /></td>
-                </tr>
+				<tr>
+				    <td>メールアドレス</td>
+				    <td><c:out value="${member.memberId}" /></td>
+				</tr>
             </table>
             <br>
             <input type="hidden" name="flag" value="B0201RegisterMemberAction">

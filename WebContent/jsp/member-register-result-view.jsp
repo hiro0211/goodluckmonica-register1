@@ -24,7 +24,7 @@
         <table>
             <tr>
                 <td>名前</td>
-                <td><c:out value="${member.name}" /></td>
+                <td><c:out value="${member.memberName}" /></td>
             </tr>
             <tr>
                 <td>性別</td>

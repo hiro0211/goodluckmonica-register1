@@ -37,13 +37,13 @@
 			<td>性別</td>
 			<td>
 				<label for="male">男性</label>
-	  			<input type="radio" id="male" name="gender" value="male">
+	  			<input type="radio" id="male" name="gender" value="M">
 
 	 			<label for="female">女性</label>
-	  			<input type="radio" id="female" name="gender" value="female">
+	  			<input type="radio" id="female" name="gender" value="F">
 
 	  				<label for="other">その他</label>
-	  				<input type="radio" id="other" name="gender" value="other">
+	  				<input type="radio" id="other" name="gender" value="O">
   			</td>
 		</tr>
 		<tr>

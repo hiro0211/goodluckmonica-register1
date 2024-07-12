@@ -23,7 +23,7 @@
 					</p>
 				</c:forEach>
 			</div>
-	
+
 			<form method="post" action="${pageContext.request.contextPath}/mserv" id="chkForm">
 			<table>
 					<tr>
@@ -31,10 +31,10 @@
 						<td><input type="text" name="memberId" id="memberId" size="10"></td>
 					</tr>
 				</table>
-				<br> <input type="hidden" name="flag" value="B0201">
+				<br> <input type="hidden" name="flag" value="B0201CheckEmailAction">
 				<input type="submit" value="次へ">
 			</form>
-	
+
 			<p>
 				<a href="${pageContext.request.contextPath}/mserv">[トップに戻る]</a>
 			</p>
