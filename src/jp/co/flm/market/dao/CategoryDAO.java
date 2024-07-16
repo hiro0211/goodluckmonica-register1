@@ -45,7 +45,7 @@ public class CategoryDAO {
         // カテゴリ情報を格納するリスト
         ArrayList<Category> categoryList = new ArrayList<Category>();
         // SQLクエリ
-        String sql = "SELECT categoryname, picture FROM category ORDER BY categoryid DESC";
+        String sql = "SELECT categoryname, picture, categoryid FROM category ORDER BY categoryid ASC";
         ResultSet res = null;
         PreparedStatement stmt = null;
 
@@ -58,6 +58,7 @@ public class CategoryDAO {
                 Category category = new Category();
                 category.setPicture(res.getString("picture"));
                 category.setCategoryName(res.getString("categoryname"));
+                category.setCategoryId(res.getString("categoryid"));
                 // Categoryオブジェクトをリストに追加
                 categoryList.add(category);
             }

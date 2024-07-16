@@ -56,7 +56,9 @@ public class B0201CheckEmailAction {
     public String execute(HttpServletRequest req) {
 
         String page = null;
+
         checkSession(req); //15行目で定義したメソッドを実行　この段階でセッションは新規作成されているはず
+
         page = validate(req);
 
         if(page == null) {     //pageがnullの時はエラーが起きていない状態
@@ -68,24 +70,28 @@ public class B0201CheckEmailAction {
                RegisterMemberLogic logic = new RegisterMemberLogic();
                logic.getMember(memberId); //getMember(業務Logic)メソッドに戻り値ない
 
-               //セッションを取得する。
-             //セッションがない場合は何もしない（絶対新規作成されてるはずなのでTrue指定しない)
-               HttpSession session = req.getSession(false);
 
-               //メールアドレスをセッションへ格納する。
+               //セッションを取得する。
+               HttpSession session = req.getSession(false); //セッションがない場合は何もしない（絶対新規作成されてるはずなのでTrue指定しない）
+
+               //Memberオブジェクトを生成してメールアドレスを格納する。
                Member member = new Member();
                member.setMemberId(memberId);
-               // セッションに格納
+
+               //MemberオブジェクトをSessionキー"member"のセッションに格納
                session.setAttribute("member", member);
 
                page="member-register-view.jsp";
 
                }catch(MarketBusinessException e) {
+                   //エラーメッセージを取得する。
+                   String errorMessage = e.getMessage();
 
                    //リクエストスコープへエラーメッセージを格納する。
                    ArrayList<String> errorMessageList = new ArrayList<String>();
-                   errorMessageList.add(e.getMessage());
+                   errorMessageList.add(errorMessage);
                    req.setAttribute("errorMessageList", errorMessageList);
+
                    page = "email-register-view.jsp";
 
                }catch(MarketSystemException e) {

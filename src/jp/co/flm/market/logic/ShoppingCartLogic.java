@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import jp.co.flm.market.common.MarketSystemException;
+import jp.co.flm.market.common.MarketBusinessException;
 import jp.co.flm.market.dao.ConnectionManager;
 import jp.co.flm.market.dao.ProductDAO;
 import jp.co.flm.market.entity.Orders;
@@ -33,12 +34,21 @@ public class ShoppingCartLogic {
      * @return 該当商品が追加されたショッピングカート
      * @throws MarketSystemException
      *             本システムのシステム例外
+     * @throws MarketBusinessException
      */
     public ArrayList<Orders> addToCart(ArrayList<Orders> cart, String productId)
-        throws MarketSystemException {
+        throws MarketSystemException, MarketBusinessException {
 
         // カートに追加する商品情報を検索する。
         Product product = getProduct(productId);
+        //在庫情報を調査：ゼロの場合エラーメッセージを格納
+        if (product != null) {
+            int stock = product.getStock().getQuantity(); // 在庫を取得
+            if (stock == 0) {
+                throw new MarketBusinessException("商品" + product.getProductName() + " は在庫切れです。");
+            }
+        }
+        //商品情報が存在しない場合
 
         // 追加する商品の注文情報の準備
         Orders newOrder = null;

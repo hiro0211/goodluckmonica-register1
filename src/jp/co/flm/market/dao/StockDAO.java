@@ -43,7 +43,41 @@ public class StockDAO {
      *             SQL例外
      */
     public Stock selectStockForUpdate(String productId) throws SQLException {
-        return null;
+        // 戻り値の準備
+        Stock stock = null;
+
+        // SQL文の準備
+        String sql = "SELECT productid, quantity FROM Stock WHERE productid = ? FOR UPDATE";
+        PreparedStatement stmt = null;
+        ResultSet res = null;
+
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, productId);
+
+            // SQL文を実行する。
+            res = stmt.executeQuery();
+
+            if (res.next()) {
+                // 在庫情報を作成する。
+                stock = new Stock();
+                stock.setProductId(res.getString("productId"));
+                stock.setQuantity(res.getInt("quantity"));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (res != null) {
+                res.close();
+            }
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+
+        return stock;
     }
 
     /**
@@ -57,5 +91,26 @@ public class StockDAO {
      *             SQL例外
      */
     public void updateStock(String productId, int quantity) throws SQLException {
+        // SQL文の準備
+        String sql = "UPDATE stock SET quantity = quantity - ? WHERE productid = ?";
+        PreparedStatement stmt = null;
+        int i = 1;
+
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(i++, quantity);
+            stmt.setString(i++, productId);
+            // SQL文を実行する。
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+
     }
 }

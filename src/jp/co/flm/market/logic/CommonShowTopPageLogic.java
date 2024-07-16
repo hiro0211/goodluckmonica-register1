@@ -23,7 +23,7 @@ public class CommonShowTopPageLogic {
                 // CategoryDAOオブジェクトを作成
                 CategoryDAO categoryDAO = new CategoryDAO(con);
 
-                // CATEGORYテーブルから全カテゴリ情報を取得し、降順にソートして返す
+                // CATEGORYテーブルから全カテゴリ情報を取得し、昇順にソートして返す
                 categoryList = categoryDAO.returnTop();
                //カテゴリー内の商品がゼロの場合
                 if (categoryList.size() == 0) {

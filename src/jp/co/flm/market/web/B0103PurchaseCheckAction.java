@@ -31,7 +31,7 @@ public class B0103PurchaseCheckAction {
     public String checkSession(HttpServletRequest req) {
         String page = null;
 
-        // セッションを取得（セッションがない場合、作成）する。
+        // セッションを取得する。
         HttpSession session = req.getSession(false);
 
         if (session == null) {
@@ -44,13 +44,18 @@ public class B0103PurchaseCheckAction {
             // ショッピングカートを取得する。
             ArrayList<Orders> cart = (ArrayList<Orders>) session.getAttribute("B01ShoppingCart");
 
-            // ショッピングカートができていない場合、エラーメッセージをリクエストスコープに格納する。
+         // ショッピングカートができていない場合、エラーメッセージをリクエストスコープに格納する。
             if (cart == null) {
                 ArrayList<String> errorMessageList = new ArrayList<String>();
                 errorMessageList.add("セッションが無効になりました。再度トップ画面から操作をやりなおしてください。");
                 req.setAttribute("errorMessageList", errorMessageList);
+
                 page = "error.jsp";
+
             }
+
+
+
         }
         return page;
     }
@@ -81,6 +86,13 @@ public class B0103PurchaseCheckAction {
             logic.processOrder(cart);
 
             page = "purchase-result-view.jsp";
+
+            //カートセッションの中身を削除
+            session.removeAttribute("B01ShoppingCart");
+
+
+            //新しいポイント情報をゲットメンバーで呼び出してセッションに入れ直す。
+
 
         } catch (MarketSystemException e) {
             // エラーメッセージを取得する。
