@@ -7,47 +7,84 @@
     <title>会員登録結果</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
     <style>
-    .result-message {
-        margin-bottom: 20px;
-        font-weight: bold;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        #mainArea {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 10px;
+        }
+        .result-message {
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: left;
+            width: 30%;
+        }
+        .top-link {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .top-link a {
+            color: #0056b3;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
     <jsp:include page="/jsp/header-non-menu.jsp" />
     <div id="mainArea">
         <h1>会員登録結果</h1>
-        <%-- contents start --%>
         <div class="result-message">
             <p>以下の内容で登録を行いました！</p>
         </div>
         <table>
             <tr>
-                <td>名前</td>
+                <th>名前</th>
                 <td><c:out value="${member.memberName}" /></td>
             </tr>
             <tr>
-                <td>性別</td>
+                <th>性別</th>
                 <td><c:out value="${member.gender}" /></td>
             </tr>
             <tr>
-                <td>住所</td>
+                <th>住所</th>
                 <td><c:out value="${member.address}" /></td>
             </tr>
             <tr>
-                <td>電話番号</td>
+                <th>電話番号</th>
                 <td><c:out value="${member.phone}" /></td>
             </tr>
             <tr>
-                <td>メールアドレス</td>
+                <th>メールアドレス</th>
                 <td><c:out value="${member.memberId}" /></td>
             </tr>
         </table>
-        <br>
-        <p>
-            <a href="${pageContext.request.contextPath}/mserv?flag=TOP">[トップに戻る]</a>
-        </p>
-        <%-- contents end --%>
+        <div class="top-link">
+            <a href="${pageContext.request.contextPath}/mserv?flag=TOP">トップへ戻る</a>
+        </div>
     </div>
     <div id="footerArea">
         <small>Copyright YYYY FUJITSU LEARNING MEDIA LIMITED</small>

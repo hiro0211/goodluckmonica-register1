@@ -36,7 +36,7 @@
 						size="10"></td>
 				</tr>
 			</table>
-			<input type="hidden" name="flag" value="B0102LoginShopping">
+			<input type="hidden" name="flag" value="B0103PurchaseMember">
 			<p>
 				<input type="submit" value="ログイン">
 			</p>

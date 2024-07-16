@@ -3,33 +3,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
-<%--
-<style>
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-th, td {
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-th {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.product-image {
-  width: 300px;
-  height: 300px;
-  object-fit: cover;
-}
-</style> --%>
 <head>
 <title>オンラインショップ</title>
 <link rel="stylesheet" type="text/css"
@@ -39,15 +12,15 @@ th {
 	<jsp:include page="/jsp/header.jsp" />
 	<div id="mainArea">
 		<%-- contents start --%>
-<h1><a href="B0101ShowCategoryAction?categoryId=${param.categoryId}">＜<c:out value="${product.category.categoryName}" />
+<h1><a href="${pageContext.request.contextPath}/mserv?flag=B0101ShowCategory&categoryId=<c:out value="${product.category.categoryId}"/>">＜<c:out value="${product.category.categoryName}" />
 </a>
 </h1>
 		<div id="target" style="color: red;">
 			<c:out value="${message}" />
 		</div>
 
-		<c:if test="${!empty product}">
- <table border="1">
+<%--<c:if test="${not empty product}">
+<table border="1">
         <thead>
             <tr>
                 <th>商品画像</th>
@@ -60,26 +33,43 @@ th {
         <tbody>
             <c:forEach var="product" items="${productlist}">
                 <tr>
-                    <td><img src="${product.picture}" alt="${product.productName}" width="100" height="100"></td>
-                    <td>${product.productId}</td>
-                    <td>${product.productName}</td>
-                    <td>${product.price}</td>
-                    <td>${product.stock.stockQuantity}</td>
+                    <td><img src='${pageContext.request.contextPath}/img_DB/<c:out value="${product.picture}"/>'></td>
+                    <td><c:out value="${product.productId}"/></td>
+                    <td><c:out value="${product.productName}"/></td>
+                    <td><c:out value="${product.price}"/></td>
+                    <td><c:out value="${product.stock.stockQuantity}"/></td>
                 </tr>
             </c:forEach>
         </tbody>
     </table>
 
 <p>
-  <a href="shopping-cart-view.jsp?productId=<c:out value="${product.productId}"/>">カートに入れる</a>
+  <a href='${pageContext.request.contextPath}/mserv?flag=B0101AddToCart&productId=<c:out value="${product.productId}"/>'>カートに入れる</a>
 </p>
+</c:if>--%>
+
+
+<div>
+<c:if test="${not empty product}">
+<div>
+    <img src='${pageContext.request.contextPath}/img_DB/<c:out value="${product.picture}"/>'>
+    <p><c:out value="${product.productId}"/></p>
+    <p><c:out value="${product.productName}"/></p>
+    <p>価格：<c:out value="${product.price}"/>円</p>
+    <p>在庫数：<c:out value="${product.stock.quantity}"/>個</p>
+    <p><a href='${pageContext.request.contextPath}/mserv?flag=B0101AddToCart&productId=<c:out value="${product.productId}"/>'>
+				<img src="${pageContext.request.contextPath}/img/cart.gif">
+				</a></p>
+</div>
 </c:if>
+</div>
+
 				<p>
 			<a href="${pageContext.request.contextPath}/mserv">[トップに戻る]</a>
 		</p>
 		<%-- contents end --%>
 	</div>
-	<div id="footerArea">
+	<div id="footerArea"style="clear: both; margin-top: 20px;">
 		<small> Copyright YYYY FUJITSU LEARNING MEDIA LIMITED </small>
 	</div>
 </body>
