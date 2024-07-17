@@ -33,20 +33,20 @@ public class B0201CheckMemberAction {
             String phone = req.getParameter("phone");
             String password = req.getParameter("password");
 
-            //入力値を確認する（空チェック）
-            if (memberName.length() == 0) {
+            // 入力値を確認する（空チェック）
+            if (memberName == null || memberName.length() == 0) {
                 errorMessageList.add("名前は入力必須項目です。");
             }
-            if (gender.length() == 0) {
+            if (gender == null || gender.length() == 0) {
                 errorMessageList.add("性別は入力必須項目です。");
             }
-            if (address.length() == 0) {
+            if (address == null || address.length() == 0) {
                 errorMessageList.add("住所は入力必須項目です。");
             }
-            if (phone.length() == 0) {
+            if (phone == null || phone.length() == 0) {
                 errorMessageList.add("電話番号は入力必須項目です。");
             }
-            if (password.length() == 0) {
+            if (password == null || password.length() == 0) {
                 errorMessageList.add("パスワードは入力必須項目です。");
             }
 
@@ -54,10 +54,10 @@ public class B0201CheckMemberAction {
             if(memberName.length() >41) {
                 errorMessageList.add("名前は40字以内で入力してください。");
             }
-            if(address.length() >81) {
+            if(address.length() > 80) {
                 errorMessageList.add("住所は80字以内で入力してください。");
             }
-            if(phone.length() >14) {
+            if(phone.length() >=14) {
                 errorMessageList.add("電話番号は13字以内で入力してください。");
             }
             if(password.length() < 4 || password.length() > 8) {
