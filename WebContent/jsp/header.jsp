@@ -20,6 +20,7 @@ body {
 		<c:if test="${CommonLoginMember != null}">
         <span>ようこそ、${CommonLoginMember.memberName}様</span>
         <br>
+        <a class="header" href="${pageContext.request.contextPath}/mserv?flag=CommonMemberInfoAction">会員情報照会</a>
         <a class="header" href="${pageContext.request.contextPath}/mserv?flag=B0101LogOut">ログアウト</a>
       </c:if>
       <c:if test="${CommonLoginMember == null}">
