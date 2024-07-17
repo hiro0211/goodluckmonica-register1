@@ -8,11 +8,17 @@
 <title>商品購入確認</title>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/style.css">
+<style>
+	body{
+	    font-family: Arial, sans-serif;
+	  	background-color: #f0f0f0;
+	}
+</style>
 </head>
 <body>
 	<jsp:include page="/jsp/header-non-menu.jsp" />
 	<div id="mainArea">
-		<h1>商品購入確認画面</h1>
+		<h1>商品購入確認</h1>
 		<%-- contents start --%>
 		<h2>会員情報</h2>
 		<table border="1">
@@ -26,7 +32,7 @@
 			</tr>
 			<tr>
 				<th>クレジットカード番号</th>
-				<td><c:out value="${B01ShoppingCart[0].creditCardId}" /></td>
+				<td>************<c:out value="${B01ShoppingCart[0].creditCardId}" /></td>
 			</tr>
 
 		</table>

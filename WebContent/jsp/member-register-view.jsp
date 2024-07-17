@@ -69,6 +69,7 @@
         .top-link {
             margin-top: 20px;
             text-align: center;
+            margin-bottom: 20px;
         }
         .top-link a {
             color: #0056b3;
@@ -129,6 +130,9 @@
         <div class="top-link">
             <a href="${pageContext.request.contextPath}/mserv">トップへ戻る</a>
         </div>
+      <div id="footerArea">
+        <small>Copyright YYYY FUJITSU LEARNING MEDIA LIMITED</small>
+    </div>
     </div>
 </body>
 </html>
