@@ -94,13 +94,13 @@
             <table>
                 <tr>
                     <td>名前</td>
-                    <td><input type="text" name="memberName" id="memberName" required></td>
+                    <td><input type="text" name="memberName" id="memberName" ></td>
                 </tr>
                 <tr>
                     <td>性別</td>
                     <td>
                         <div class="radio-group">
-                            <input type="radio" id="male" name="gender" value="M" required>
+                            <input type="radio" id="male" name="gender" value="M" >
                             <label for="male">男性</label>
                             <input type="radio" id="female" name="gender" value="F">
                             <label for="female">女性</label>
@@ -111,15 +111,15 @@
                 </tr>
                 <tr>
                     <td>住所</td>
-                    <td><input type="text" name="address" id="address" required></td>
+                    <td><input type="text" name="address" id="address" ></td>
                 </tr>
                 <tr>
                     <td>電話番号</td>
-                    <td><input type="text" name="phone" id="phone" required></td>
+                    <td><input type="text" name="phone" id="phone" ></td>
                 </tr>
                 <tr>
                     <td>パスワード</td>
-                    <td><input type="password" name="password" id="password" required></td>
+                    <td><input type="password" name="password" id="password" ></td>
                 </tr>
             </table>
             <input type="hidden" name="flag" value="B0201CheckMemberAction">
