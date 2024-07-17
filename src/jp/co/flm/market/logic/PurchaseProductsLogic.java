@@ -112,6 +112,7 @@ public class PurchaseProductsLogic {
                 // スタックトレースを出力
                 e2.printStackTrace();
             }
+            throw new MarketSystemException("システムエラーです。システム管理者に連絡してください。");
         } finally {
                 try {
                     if(con != null) {

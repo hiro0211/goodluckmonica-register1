@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author FLM
  * @version 1.0 YYYY/MM/DD
  */
-public class CommonLoginAction {
+public class CommonLoginAction implements ActionIF{
 
     /**
      * アクションを実行する。

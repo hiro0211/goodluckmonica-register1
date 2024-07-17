@@ -1,5 +1,5 @@
 /**
- * jp.co.flm.market.web.B0103PurchaseMemberAction
+ * jp.co.flm.market.web.B0202LoginMemberAction
  *
  * All Rights Reserved, Copyright Fujitsu Learning Media Limited
  */
@@ -14,15 +14,15 @@ import jp.co.flm.market.common.MarketBusinessException;
 import jp.co.flm.market.common.MarketSystemException;
 import jp.co.flm.market.entity.Member;
 import jp.co.flm.market.entity.Orders;
-import jp.co.flm.market.logic.PurchaseProductsLogic;
+import jp.co.flm.market.logic.MemberInfoLogic;
 
 /**
- * 商品購入画面へ遷移するアクションクラスです。
+ * 会員情報照会画面へ遷移するアクションクラスです。
  *
  * @author FLM
  * @version 1.0 YYYY/MM/DD
  */
-public class B0103PurchaseMemberAction implements ActionIF{
+public class B0203UpdateMemberAction implements ActionIF{
 
     /**
      * セッションチェックを行う。
@@ -30,36 +30,11 @@ public class B0103PurchaseMemberAction implements ActionIF{
      * @param req
      *            HttpServletRequest
      */
-    public String checkSession(HttpServletRequest req) {
-        String page = null;
+    public void checkSession(HttpServletRequest req) {
 
-        // セッションを取得する。
-        HttpSession session = req.getSession(false);
-
-        if (session == null) {
-            // セッションが確立されていない場合、エラーメッセージをリクエストスコープに格納する。
-            ArrayList<String> errorMessageList = new ArrayList<String>();
-            errorMessageList.add("セッションが無効になりました。再度トップ画面から操作をやりなおしてください。");
-            req.setAttribute("errorMessageList", errorMessageList);
-            page = "error.jsp";
-        } else {
-            // ショッピングカートを取得する。
-            ArrayList<Orders> cart = (ArrayList<Orders>) session.getAttribute("B01ShoppingCart");
-
-           // ショッピングカートができていない場合、エラーメッセージをリクエストスコープに格納する。
-            if (cart == null) {
-                ArrayList<String> errorMessageList = new ArrayList<String>();
-                errorMessageList.add("セッションが無効になりました。再度トップ画面から操作をやりなおしてください。");
-                req.setAttribute("errorMessageList", errorMessageList);
-
-                page = "error.jsp";
-
-            }
-
-        }
-        return page;
+        // セッションを取得（セッションがない場合、作成）する。
+        req.getSession(true);
     }
-
 
     /**
      * 入力チェックを行う。
@@ -89,7 +64,7 @@ public class B0103PurchaseMemberAction implements ActionIF{
         // 入力エラーが発生していたかを確認する。
         if (errorMessageList.size() != 0) {
             req.setAttribute("errorMessageList", errorMessageList);
-            page = "shopping-login-view.jsp";
+            page = "member-login-view.jsp";
         }
 
         return page;
@@ -106,39 +81,37 @@ public class B0103PurchaseMemberAction implements ActionIF{
 
         String page = null;
 
-        page = checkSession(req);
+        checkSession(req);
+
+        page = validate(req);
 
         if (page == null) {
-
-            page = validate(req);
-        }
-
-        if (page == null) {
-
             try {
-
                 // フォームで指定された会員IDとパスワードを取得する。
                 String memberId = req.getParameter("memberId");
                 String password = req.getParameter("password");
 
                 // 会員情報を取得する。
-                PurchaseProductsLogic logic = new PurchaseProductsLogic();
+                MemberInfoLogic logic = new MemberInfoLogic();
                 Member member = logic.getMember(memberId, password);
 
                 // セッションを取得する。
                 HttpSession session = req.getSession(false);
-
                 // 会員情報をセッションへ格納する。
                 session.setAttribute("CommonLoginMember", member);
 
-                //ショッピングカートを取得する
-                ArrayList<Orders> cart = (ArrayList<Orders>) session.getAttribute("B01ShoppingCart");
+                // 購入履歴情報を取得する。
+                ArrayList<Orders> orderList = logic.getOrderList(memberId);
 
-                //ショッピングカート情報をセッションスコープへ格納する。
-                session.setAttribute("B01ShoppingCart", cart);
+                // 購入履歴情報をリクエストスコープへ格納する。
+                req.setAttribute("orderList", orderList);
 
-                page = "purchase-products-view.jsp";
+                if (orderList.size() == 0) {
+                    // 購入履歴情報がなかった場合、メッセージをリクエストスコープへ格納する。
+                    req.setAttribute("message", "現在ご注文情報はありません。");
+                }
 
+                page = "member-info-view.jsp";
             } catch (MarketBusinessException e) {
                 // エラーメッセージを取得する。
                 String errorMessage = e.getMessage();
@@ -148,8 +121,7 @@ public class B0103PurchaseMemberAction implements ActionIF{
                 errorMessageList.add(errorMessage);
                 req.setAttribute("errorMessageList", errorMessageList);
 
-                page = "shopping-login-view.jsp";
-
+                page = "member-login-view.jsp";
             } catch (MarketSystemException e) {
                 // エラーメッセージを取得する。
                 String errorMessage = e.getMessage();

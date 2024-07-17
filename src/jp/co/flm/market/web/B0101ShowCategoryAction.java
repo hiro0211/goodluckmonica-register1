@@ -11,7 +11,7 @@ import jp.co.flm.market.logic.ShowProductLogic;
  * @author FLM
  * @version 1.0 YYYY/MM/DD
  */
-public class B0101ShowCategoryAction {
+public class B0101ShowCategoryAction implements ActionIF {
     /**
      * アクションを実行する。
      *

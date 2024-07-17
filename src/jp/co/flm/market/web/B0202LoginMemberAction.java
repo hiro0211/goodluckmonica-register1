@@ -22,7 +22,7 @@ import jp.co.flm.market.logic.MemberInfoLogic;
  * @author FLM
  * @version 1.0 YYYY/MM/DD
  */
-public class B0202LoginMemberAction {
+public class B0202LoginMemberAction implements ActionIF{
 
     /**
      * セッションチェックを行う。

@@ -19,7 +19,7 @@ import jp.co.flm.market.logic.ShoppingCartLogic;
  * @author FLM
  * @version 1.0 YYYY/MM/DD
  */
-public class B0102UpdateCartAction {
+public class B0102UpdateCartAction implements ActionIF{
 
     /**
      * セッションチェックを行う。

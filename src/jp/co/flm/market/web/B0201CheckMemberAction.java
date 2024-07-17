@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 import jp.co.flm.market.common.MarketSystemException;
 import jp.co.flm.market.entity.Member;
 
-public class B0201CheckMemberAction {
+public class B0201CheckMemberAction implements ActionIF{
     //pageを初期化
     String page = null;
 
@@ -91,7 +91,7 @@ public class B0201CheckMemberAction {
                 HttpSession session = req.getSession(false);
 
                //CheckEmailActionクラスで生成したオブジェクトに"member"セッションの情報を代入
-                Member member = (Member) session.getAttribute("member");
+                Member member = (Member) session.getAttribute("CommonLoginMember");
 
                 //Memberオブジェクトにそれぞれの値を代入
                 member.setMemberName(memberName);
@@ -101,7 +101,7 @@ public class B0201CheckMemberAction {
                 member.setPassword(password);
 
                 // セッションに会員情報を保存する
-                session.setAttribute("member", member);
+                session.setAttribute("CommonLoginMember", member);
 
 
                 //確認画面に遷移する

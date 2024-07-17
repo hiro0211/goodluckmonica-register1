@@ -8,7 +8,7 @@ import jp.co.flm.market.common.MarketSystemException;
 import jp.co.flm.market.entity.Member;
 import jp.co.flm.market.logic.RegisterMemberLogic;
 
-public class B0201RegisterMemberAction {
+public class B0201RegisterMemberAction implements ActionIF{
         //pageを初期化
         String page = null;
 
@@ -21,7 +21,7 @@ public class B0201RegisterMemberAction {
 //                Member member = new Member();
 
                 //セッション情報の取得
-                Member member = (Member) session.getAttribute("member");
+                Member member = (Member) session.getAttribute("CommonLoginMember");
 
                 //RegisterMemberLogicオブジェクトを生成
                 RegisterMemberLogic logic= new RegisterMemberLogic();
@@ -33,7 +33,7 @@ public class B0201RegisterMemberAction {
                 req.setAttribute("member", member);
 
               //会員登録が成功したらセッション情報を削除
-                session.removeAttribute("member");
+//                session.removeAttribute("member");
 
                 // 会員登録結果画面に遷移する
                 page = "member-register-result-view.jsp";

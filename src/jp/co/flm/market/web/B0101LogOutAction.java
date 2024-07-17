@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
  * @author FLM
  * @version 1.0 YYYY/MM/DD
  */
-public class B0101LogOutAction {
+public class B0101LogOutAction implements ActionIF{
     /**
      * アクションを実行する。
      *

@@ -79,6 +79,10 @@ public class FrontControllerServlet extends HttpServlet {
                 CommonLoginAction commonLoginAction = new CommonLoginAction();
                 page = commonLoginAction.execute(request);
                 break;
+            case "CommonMemberInfoAction":
+                CommonMemberInfoAction commonMemberInfoAction = new CommonMemberInfoAction();
+                page = commonMemberInfoAction.execute(request);
+                break;
             case "CommonMemberRegisterAction":
                 CommonMemberRegisterAction CommonMemberRegisterAction = new CommonMemberRegisterAction();
                 page = CommonMemberRegisterAction.execute(request);

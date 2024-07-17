@@ -18,7 +18,7 @@ import jp.co.flm.market.logic.CommonShowTopPageLogic;
  * @author FLM
  * @version 1.0 YYYY/MM/DD
  */
-public class CommonShowTopPageAction {
+public class CommonShowTopPageAction implements ActionIF{
 
     /**
      * アクションを実行する。

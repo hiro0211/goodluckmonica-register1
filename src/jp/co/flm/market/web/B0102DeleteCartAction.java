@@ -19,7 +19,7 @@ import jp.co.flm.market.logic.ShoppingCartLogic;
  * @author FLM
  * @version 1.0 YYYY/MM/DD
  */
-public class B0102DeleteCartAction {
+public class B0102DeleteCartAction implements ActionIF{
 
     /**
      * セッションチェックを行う。

@@ -9,7 +9,7 @@ import jp.co.flm.market.entity.Member;
 import jp.co.flm.market.logic.RegisterMemberLogic;
 
 
-public class B0201CheckEmailAction {
+public class B0201CheckEmailAction implements ActionIF{
 
     //セッションを取得（ない場合新規作成する）
     public void checkSession(HttpServletRequest req) {
@@ -30,7 +30,7 @@ public class B0201CheckEmailAction {
             errorMessageList.add("メールアドレスは入力必須項目です。");
         }
         //入力値を確認する（不正な文字が含まれているかどうか）
-        String [] array ={"<" ,">" ," ' " ,"(", ")", "{", "}", "[", "]", "/", "*", "&", "#", "$", "\\", "\""};
+        String [] array ={"<" ,">" ," ' " ,"(", ")", "{", "}", "[", "]", "/", "*", "&","!", "%","#", "$", "\\", "\""};
         for (String n:array){
             if(memberId.contains(n)){
                 errorMessageList.add("メールアドレスに不正な文字が含まれています。");
@@ -79,7 +79,7 @@ public class B0201CheckEmailAction {
                member.setMemberId(memberId);
 
                //MemberオブジェクトをSessionキー"member"のセッションに格納
-               session.setAttribute("member", member);
+               session.setAttribute("CommonLoginMember", member);
 
                page="member-register-view.jsp";
 
