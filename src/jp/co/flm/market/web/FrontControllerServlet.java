@@ -143,7 +143,6 @@ public class FrontControllerServlet extends HttpServlet {
                 B0201CheckMemberAction b0201CheckMemberAction = new B0201CheckMemberAction();
                 page = b0201CheckMemberAction.execute(request);
                 break;
-
             case "B0201RegisterMemberAction":
                 B0201RegisterMemberAction b0201RegisterMemberAction = new B0201RegisterMemberAction();
                 page = b0201RegisterMemberAction.execute(request);
@@ -156,7 +155,6 @@ public class FrontControllerServlet extends HttpServlet {
                 B0203UpdateMemberAction b0203UpdateMemberAction = new B0203UpdateMemberAction();
                 page = b0203UpdateMemberAction.execute(request);
                 break;
-                
             default:
                 // エラーメッセージを取得する。
                 String errorMessage = "不正な操作です。";

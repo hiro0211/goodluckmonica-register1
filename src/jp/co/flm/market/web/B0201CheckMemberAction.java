@@ -39,6 +39,7 @@ public class B0201CheckMemberAction implements ActionIF{
             }
             if (gender == null || gender.length() == 0) {
                 errorMessageList.add("性別は入力必須項目です。");
+                
             }
             if (address == null || address.length() == 0) {
                 errorMessageList.add("住所は入力必須項目です。");

@@ -7,8 +7,11 @@ package jp.co.flm.market.web;
 
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import jp.co.flm.market.common.MarketSystemException;
 import jp.co.flm.market.entity.Category;
+import jp.co.flm.market.entity.Member;
 import jp.co.flm.market.logic.CommonShowTopPageLogic;
 
 
@@ -35,6 +38,16 @@ public class CommonShowTopPageAction implements ActionIF{
             ArrayList<Category> categoryList = logic.returnTop();
          // 検索結果をリクエストスコープに設定する。
             req.setAttribute("categoryList", categoryList);
+         // セッション取得
+            HttpSession session = req.getSession(false);
+         // ログイン状態でなければセッションを削除
+            Member member = (Member) session.getAttribute("flg");
+
+            if (member == null ) {
+                //カートセッションの中身を削除
+                session.removeAttribute("CommonLoginMember");
+            }
+
          // 結果画面を戻り値に設定する。
             page = "top-view.jsp";
         } catch(MarketSystemException e) {

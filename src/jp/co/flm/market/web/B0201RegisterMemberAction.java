@@ -22,13 +22,16 @@ public class B0201RegisterMemberAction implements ActionIF{
 
                 //セッション情報の取得
                 Member member = (Member) session.getAttribute("CommonLoginMember");
-
+                
                 //RegisterMemberLogicオブジェクトを生成
                 RegisterMemberLogic logic= new RegisterMemberLogic();
 
                 //LogicのregisterMemberメソッドを呼び出す
                 logic.registerMember(member);
-
+                
+                // ログイン済みか確認するフラグを作成
+                session.setAttribute("flg", member);
+                
                 //次の画面で表示されるように会員情報をsetする
                 req.setAttribute("member", member);
 
