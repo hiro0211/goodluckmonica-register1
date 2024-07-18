@@ -4,12 +4,12 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>会員登録確認</title>
+    <title>会員情報更新確認</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: white;
         }
         #mainArea {
             background-color: white;
@@ -38,13 +38,10 @@
             border: 1px solid #ddd;
         }
         th {
-            background-color: #d3d3d3; /* Changed from purple to light gray */
+            background-color: #d3d3d3;
             font-weight: bold;
             text-align: left;
             width: 30%;
-        }
-        .form-group {
-            margin-bottom: 20px;
         }
         .button-group {
             text-align: center;
@@ -59,7 +56,7 @@
             cursor: pointer;
             border-radius: 4px;
         }
-        .register-button {
+        .update-button {
             background-color: #0056b3;
         }
         .back-button {
@@ -80,16 +77,16 @@
     </style>
 </head>
 <body>
-    <jsp:include page="/jsp/header-non-menu.jsp" />
+    <jsp:include page="/jsp/header.jsp" />
     <div id="mainArea">
-        <h1>会員登録確認</h1>
+        <h1>会員情報更新確認</h1>
         <div id="target" style="color: red;">
             <c:forEach var="errorMessage" items="${errorMessageList}" varStatus="status">
                 <p><c:out value="${errorMessage}" /></p>
             </c:forEach>
         </div>
         <div class="result-message">
-            <p>以下の内容で登録を行います。よろしければ「登録」ボタンをクリックしてください。</p>
+            <p>以下の内容で更新を行います。よろしければ「更新」ボタンをクリックしてください。</p>
         </div>
         <form method="post" action="${pageContext.request.contextPath}/mserv" id="confirmForm">
             <table>
@@ -109,14 +106,10 @@
                     <th>電話番号</th>
                     <td><c:out value="${CommonLoginMember.phone}" /></td>
                 </tr>
-                <tr>
-                    <th>メールアドレス</th>
-                    <td><c:out value="${CommonLoginMember.memberId}" /></td>
-                </tr>
             </table>
-            <input type="hidden" name="flag" value="B0201RegisterMemberAction">
+            <input type="hidden" name="flag" value="B0203UpdateMember">
             <div class="button-group">
-                <input type="submit" value="登録" class="button register-button">
+                <input type="submit" value="更新" class="button update-button">
                 <input type="button" value="戻る" onclick="history.back()" class="button back-button">
             </div>
         </form>

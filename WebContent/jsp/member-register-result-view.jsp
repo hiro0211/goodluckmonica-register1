@@ -9,7 +9,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: white;
         }
         #mainArea {
             background-color: white;
@@ -63,23 +63,23 @@
         <table>
             <tr>
                 <th>名前</th>
-                <td><c:out value="${member.memberName}" /></td>
+                <td><c:out value="${CommonLoginMember.memberName}" /></td>
             </tr>
             <tr>
                 <th>性別</th>
-                <td><c:out value="${member.gender}" /></td>
+                <td><c:out value="${CommonLoginMember.gender}" /></td>
             </tr>
             <tr>
                 <th>住所</th>
-                <td><c:out value="${member.address}" /></td>
+                <td><c:out value="${CommonLoginMember.address}" /></td>
             </tr>
             <tr>
                 <th>電話番号</th>
-                <td><c:out value="${member.phone}" /></td>
+                <td><c:out value="${CommonLoginMember.phone}" /></td>
             </tr>
             <tr>
                 <th>メールアドレス</th>
-                <td><c:out value="${member.memberId}" /></td>
+                <td><c:out value="${CommonLoginMember.memberId}" /></td>
             </tr>
         </table>
         <div class="top-link">
