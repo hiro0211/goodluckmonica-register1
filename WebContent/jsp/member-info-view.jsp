@@ -8,7 +8,7 @@
 <title>オンラインショップ</title>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/style.css">
-	<style>
+	<!--<style>
         body {
             font-family: Arial, sans-serif;
             background-color: white;
@@ -89,6 +89,7 @@
         padding: 5px; /* さらにパディングを小さくする */
     	}
     </style>
+   -->
 </head>
 <body>
 	<jsp:include page="/jsp/header.jsp" />

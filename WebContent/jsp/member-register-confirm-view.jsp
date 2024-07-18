@@ -9,7 +9,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: white;
         }
         #mainArea {
             background-color: white;
@@ -36,6 +36,7 @@
         th, td {
             padding: 10px;
             border: 1px solid #ddd;
+            text-align: left;
         }
         th {
             background-color: #d3d3d3; /* Changed from purple to light gray */

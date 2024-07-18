@@ -17,51 +17,64 @@ height: 100px; /* 画像の高さ */
 }
   .link{
 color: black; /* リンクの色を黒に設定 */
+text-decoration: none;
 
+}
+.link:hover{
+text-decoration: underline;
 }
 body {
             font-family: Arial, sans-serif;
         }
+/* Target the div containing the image and text */
+#mainArea td > div {
+  width: 150px;  /* Set desired width */
+  height: 150px; /* Set desired height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
 </style>
 </head>
 <body>
 <jsp:include page="/jsp/header.jsp" />
 <div id="mainArea">
 <h1>商品検索</h1>
-	<%-- contents start --%>
-	<p>
-		<input type="hidden" name="flag" value="">
-	</p>
-	<c:if test="${not empty categoryList}">
-	<table>
-	<c:forEach var="category" items="${categoryList}" varStatus="status">
-		<c:if test="${status.first}">
-		<tr>
-		</c:if>
-			<td>
-	<div style="background-color:#E5E5E5; padding:20px; border-radius:5px;">
-    <a class="link" href='${pageContext.request.contextPath}/mserv?flag=B0101ShowCategory&categoryId=<c:out value="${category.categoryId}"/>'>
-        <img class="category-image" src='${pageContext.request.contextPath}/img/<c:out value="${category.picture}"/>'>
-        <br><c:out value="${category.categoryName}"/>
-    </a>
-    <p></p>
-                </div>
-                </td>
-	<c:if test="${(status.count % 3 == 0) && (!status.first)}"><%-- index starts from 0, count starts from 1--%>
-		</tr>
-		<tr>
-	</c:if>
-	<c:if test="${status.last}">
-		</tr>
-	</c:if>
+<%-- contents start --%>
+<p>
+<input type="hidden" name="flag" value="">
+</p>
+<c:if test="${not empty categoryList}">
+<table>
+<c:forEach var="category" items="${categoryList}" varStatus="status">
+<c:if test="${status.first}">
+<tr>
+</c:if>
+<td>
+<div style="background-color:#E5E5E5; padding:20px; border-radius:5px;">
+<a class="link" href='${pageContext.request.contextPath}/mserv?flag=B0101ShowCategory&categoryId=<c:out value="${category.categoryId}"/>'>
+<img class="category-image" src='${pageContext.request.contextPath}/img/<c:out value="${category.picture}"/>'>
+<br><br><c:out value="${category.categoryName}"/>
+</a>
+<p></p>
+</div>
+</td>
+<c:if test="${(status.count % 3 == 0) && (!status.first)}"><%-- index starts from 0, count starts from 1--%>
+</tr>
+<tr>
+</c:if>
+<c:if test="${status.last}">
+</tr>
+</c:if>
 
 </c:forEach>
 </table>
 </c:if>
 </div>
-	<%-- contents end --%>
+<%-- contents end --%>
 <div id="footerArea"style="clear: both; margin-top: 20px;">
-	<small> Copyright YYYY FUJITSU LEARNING MEDIA LIMITED </small>
+<small> Copyright YYYY FUJITSU LEARNING MEDIA LIMITED </small>
 </div>
 
 </body>
