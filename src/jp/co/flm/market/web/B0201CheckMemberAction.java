@@ -103,7 +103,6 @@ public class B0201CheckMemberAction implements ActionIF{
                 // セッションに会員情報を保存する
                 session.setAttribute("CommonLoginMember", member);
 
-
                 //確認画面に遷移する
                 page = "member-register-confirm-view.jsp";
 

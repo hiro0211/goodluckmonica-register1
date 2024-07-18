@@ -1,136 +1,101 @@
-/**
- * jp.co.flm.market.web.B0202LoginMemberAction
- *
- * All Rights Reserved, Copyright Fujitsu Learning Media Limited
- */
 package jp.co.flm.market.web;
 
 import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import jp.co.flm.market.common.MarketBusinessException;
 import jp.co.flm.market.common.MarketSystemException;
 import jp.co.flm.market.entity.Member;
-import jp.co.flm.market.entity.Orders;
-import jp.co.flm.market.logic.MemberInfoLogic;
+import jp.co.flm.market.logic.UpdateMemberLogic;
 
-/**
- * 会員情報照会画面へ遷移するアクションクラスです。
- *
- * @author FLM
- * @version 1.0 YYYY/MM/DD
- */
-public class B0203UpdateMemberAction implements ActionIF{
+public class B0203UpdateMemberAction implements ActionIF {
 
-    /**
-     * セッションチェックを行う。
-     *
-     * @param req
-     *            HttpServletRequest
-     */
-    public void checkSession(HttpServletRequest req) {
-
-        // セッションを取得（セッションがない場合、作成）する。
-        req.getSession(true);
-    }
-
-    /**
-     * 入力チェックを行う。
-     *
-     * @param req
-     *            HttpServletRequest
-     * @return エラー画面のJSP名
-     */
+    //入力値をチェックするメソッド
     public String validate(HttpServletRequest req) {
         String page = null;
-
-        // メッセージ格納リストを作成する。
         ArrayList<String> errorMessageList = new ArrayList<String>();
 
-        // フォームで指定された会員IDとパスワードを取得する。
-        String memberId = req.getParameter("memberId");
+        String memberName = req.getParameter("memberName");
+        String gender = req.getParameter("gender");
+        String address = req.getParameter("address");
+        String phone = req.getParameter("phone");
         String password = req.getParameter("password");
 
-        // 入力値を確認する（空チェック）。
-        if (memberId.length() == 0) {
-            errorMessageList.add("会員IDは入力必須項目です。");
-        }
-        if (password.length() == 0) {
-            errorMessageList.add("パスワードは入力必須項目です。");
+        // 入力チェック（空チェックと文字数チェック）
+        if (memberName == null || memberName.length() == 0) {
+            errorMessageList.add("名前は入力必須項目です。");
+        } else if (memberName.length() > 40) {
+            errorMessageList.add("名前は40字以内で入力してください。");
         }
 
-        // 入力エラーが発生していたかを確認する。
+        if (gender == null || gender.length() == 0) {
+            errorMessageList.add("性別は入力必須項目です。");
+        }
+
+        if (address == null || address.length() == 0) {
+            errorMessageList.add("住所は入力必須項目です。");
+        } else if (address.length() > 80) {
+            errorMessageList.add("住所は80字以内で入力してください。");
+        }
+
+        if (phone == null || phone.length() == 0) {
+            errorMessageList.add("電話番号は入力必須項目です。");
+        } else if (phone.length() >= 14) {
+            errorMessageList.add("電話番号は13字以内で入力してください。");
+        }
+
+        if (password == null || password.length() == 0) {
+            errorMessageList.add("パスワードは入力必須項目です。");
+        } else if (password.length() < 4 || password.length() > 8) {
+            errorMessageList.add("パスワードは4文字以上8文字以内で入力してください。");
+        }
+
         if (errorMessageList.size() != 0) {
             req.setAttribute("errorMessageList", errorMessageList);
-            page = "member-login-view.jsp";
+            page = "member-update-view.jsp";
         }
 
         return page;
     }
 
-    /**
-     * アクションを実行する。
-     *
-     * @param req
-     *            HttpServletRequest
-     * @return 次画面のJSP名
-     */
     public String execute(HttpServletRequest req) {
-
         String page = null;
-
-        checkSession(req);
 
         page = validate(req);
 
         if (page == null) {
             try {
-                // フォームで指定された会員IDとパスワードを取得する。
-                String memberId = req.getParameter("memberId");
-                String password = req.getParameter("password");
-
-                // 会員情報を取得する。
-                MemberInfoLogic logic = new MemberInfoLogic();
-                Member member = logic.getMember(memberId, password);
-
-                // セッションを取得する。
                 HttpSession session = req.getSession(false);
-                // 会員情報をセッションへ格納する。
+                Member member = (Member) session.getAttribute("CommonLoginMember");
+                
+                // 更新する会員情報を取得する。
+                String password = req.getParameter("password");
+                String memberName = req.getParameter("memberName");
+                String gender = req.getParameter("gender");
+                String address = req.getParameter("address");
+                String phone = req.getParameter("phone");
+
+                member.setPassword(password);
+                member.setMemberName(memberName);
+                member.setGender(gender);
+                member.setAddress(address);
+                member.setPhone(phone);
+
+                UpdateMemberLogic logic = new UpdateMemberLogic();
+                logic.updateMember(member);
+
                 session.setAttribute("CommonLoginMember", member);
 
-                // 購入履歴情報を取得する。
-                ArrayList<Orders> orderList = logic.getOrderList(memberId);
-
-                // 購入履歴情報をリクエストスコープへ格納する。
-                req.setAttribute("orderList", orderList);
-
-                if (orderList.size() == 0) {
-                    // 購入履歴情報がなかった場合、メッセージをリクエストスコープへ格納する。
-                    req.setAttribute("message", "現在ご注文情報はありません。");
-                }
-
-                page = "member-info-view.jsp";
+                page = "member-update-result-view.jsp";
             } catch (MarketBusinessException e) {
-                // エラーメッセージを取得する。
-                String errorMessage = e.getMessage();
-
-                // リクエストスコープへエラーメッセージを格納する。
                 ArrayList<String> errorMessageList = new ArrayList<String>();
-                errorMessageList.add(errorMessage);
+                errorMessageList.add(e.getMessage());
                 req.setAttribute("errorMessageList", errorMessageList);
-
-                page = "member-login-view.jsp";
+                page = "member-update-view.jsp";
             } catch (MarketSystemException e) {
-                // エラーメッセージを取得する。
-                String errorMessage = e.getMessage();
-
-                // リクエストスコープへエラーメッセージを格納する。
                 ArrayList<String> errorMessageList = new ArrayList<String>();
-                errorMessageList.add(errorMessage);
+                errorMessageList.add(e.getMessage());
                 req.setAttribute("errorMessageList", errorMessageList);
-
                 page = "error.jsp";
             }
         }
