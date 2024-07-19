@@ -8,88 +8,107 @@
 <title>オンラインショップ</title>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/style.css">
-	<!--<style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: white;
-        }
-        #mainArea {
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            max-width: 95%;
-            margin: 20px auto;
-            overflow-x: auto; /* 横スクロールを可能にする */
-        }
-        h1 {
-            color: #333;
-            border-bottom: 2px solid #0056b3;
-            padding-bottom: 10px;
-        }
-        .result-message {
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            writing-mode: horizontal-tb;
-    		text-orientation: mixed;
-   	 		white-space: nowrap;
-        }
-        th {
-            background-color: #d3d3d3;
-            font-weight: bold;
-            text-align: left;
-            width: 30%;
-        }
-        .button-group {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .button {
-            padding: 10px 20px;
-            margin: 0 10px;
-            font-size: 16px;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        .update-button {
-            background-color: #0056b3;
-        }
-        .back-button {
-            background-color: #6c757d;
-        }
-        .top-link {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .top-link a {
-            color: #0056b3;
-            text-decoration: none;
-        }
-        #target {
-            color: red;
-            margin-bottom: 15px;
-        }
-        @media screen and (max-width: 600px) {
-    	table {
-        font-size: 14px; /* 小さな画面でフォントサイズを小さくする */
-    	}
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background-color: white;
+}
 
-    	th, td {
-        padding: 5px; /* さらにパディングを小さくする */
-    	}
-    </style>
-   -->
+#mainArea {
+	background-color: white;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	max-width: 95%;
+	margin: 20px auto;
+	overflow-x: auto; /* 横スクロールを可能にする */
+}
+
+h1 {
+	color: #333;
+	border-bottom: 2px solid #0056b3;
+	padding-bottom: 10px;
+}
+
+.result-message {
+	margin-bottom: 20px;
+	font-weight: bold;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+}
+
+th, td {
+	padding: 10px;
+	border: 1px solid #ddd;
+	writing-mode: horizontal-tb;
+	text-orientation: mixed;
+	white-space: nowrap;
+	text-align: left;
+}
+
+th {
+	background-color: #d3d3d3;
+	font-weight: bold;
+	text-align: left;
+	width: 30%;
+}
+
+.button-group {
+	text-align: center;
+	margin-top: 20px;
+}
+
+.button {
+	padding: 10px 20px;
+	margin: 0 10px;
+	font-size: 16px;
+	color: white;
+	border: none;
+	cursor: pointer;
+	border-radius: 4px;
+}
+
+.order {
+	color: red;
+}
+
+.update-button {
+	background-color: #0056b3;
+}
+
+.back-button {
+	background-color: #6c757d;
+}
+
+.top-link {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.top-link a {
+	color: #0056b3;
+	text-decoration: none;
+}
+
+#target {
+	color: red;
+	margin-bottom: 15px;
+}
+
+@media screen and (max-width: 600px) {
+	table {
+		font-size: 14px; /* 小さな画面でフォントサイズを小さくする */
+	}
+	th, td {
+		padding: 5px; /* さらにパディングを小さくする */
+		text-align: left;
+	}
+}
+</style>
 </head>
 <body>
 	<jsp:include page="/jsp/header.jsp" />
@@ -123,7 +142,7 @@
 		<h2>注文情報</h2>
 
 		<c:if test="${empty orderList}">
-			<c:out value="${message}" />
+			<p class="order">まだ注文情報はありません。</p>
 		</c:if>
 
 		<c:if test="${!empty orderList}">
@@ -162,10 +181,12 @@
 			</table>
 		</c:if>
 
-		<br> <br> <a
-			href="${pageContext.request.contextPath}/mserv?flag=B0203UpdateMember">[会員情報更新]</a>&nbsp;&nbsp;
-		<a href="${pageContext.request.contextPath}/mserv">[トップに戻る]</a>
-
+		<br> <br>
+		<div class="top-link">
+			<a
+				href="${pageContext.request.contextPath}/mserv?flag=B0203UpdateMember">会員情報更新</a>&nbsp;&nbsp;
+			<a href="${pageContext.request.contextPath}/mserv">トップに戻る</a>
+		</div>
 		<%-- contents end --%>
 	</div>
 	<div id="footerArea">

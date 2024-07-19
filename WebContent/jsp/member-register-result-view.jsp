@@ -64,23 +64,31 @@
         <table>
             <tr>
                 <th>名前</th>
-                <td><c:out value="${CommonLoginMember.memberName}" /></td>
+                <td><c:out value="${registerMember.memberName}" /></td>
             </tr>
             <tr>
                 <th>性別</th>
-                <td><c:out value="${CommonLoginMember.gender}" /></td>
+					<td>
+						<c:if test="${registerMember.gender == 'M'}">男性</c:if>
+						 <c:if test="${registerMember.gender == 'F'}">女性</c:if>
+						 <c:if test="${registerMember.gender == 'O'}">その他</c:if>
+						 <c:if test="${registerMember.gender != 'M' && registerMember.gender != 'F' && registerMember.gender != 'O'}">
+		       								${registerMember.gender}
+		       			</c:if>
+		       		</td>
             </tr>
             <tr>
+            <tr>
                 <th>住所</th>
-                <td><c:out value="${CommonLoginMember.address}" /></td>
+                <td><c:out value="${registerMember.address}" /></td>
             </tr>
             <tr>
                 <th>電話番号</th>
-                <td><c:out value="${CommonLoginMember.phone}" /></td>
+                <td><c:out value="${registerMember.phone}" /></td>
             </tr>
             <tr>
                 <th>メールアドレス</th>
-                <td><c:out value="${CommonLoginMember.memberId}" /></td>
+                <td><c:out value="${registerMember.memberId}" /></td>
             </tr>
         </table>
         <div class="top-link">

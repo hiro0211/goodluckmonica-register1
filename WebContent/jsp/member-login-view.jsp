@@ -9,6 +9,69 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/style.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/loginInputCheck.js"></script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: white;
+    }
+    #mainArea {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        max-width: 600px;
+        margin: 20px auto;
+    }
+    h1 {
+        color: #333;
+        border-bottom: 2px solid #0056b3;
+        padding-bottom: 10px;
+    }
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 15px;
+    }
+    td {
+        padding: 5px;
+    }
+    td:first-child {
+        font-weight: bold;
+        width: 30%;
+        text-align: left;
+    }
+    input[type="text"], input[type="password"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    .submit-button {
+        margin-top: 20px;
+        text-align: center;
+    }
+    .submit-button input[type="submit"] {
+        padding: 10px 20px;
+        background-color: #0056b3;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .top-link {
+        margin-top: 20px;
+        text-align: center;
+    }
+    .top-link a {
+        color: #0056b3;
+        text-decoration: none;
+    }
+    #target {
+        color: red;
+        margin-bottom: 15px;
+    }
+</style>
 </head>
 <body>
 	<jsp:include page="/jsp/header-non-menu.jsp" />
@@ -37,12 +100,14 @@
 				</tr>
 			</table>
 			<br> <input type="hidden" name="flag" value="B0202LoginMember">
+		<div class="submit-button">
 			<input type="submit" value="ログイン">
+        </div>
 		</form>
 
-		<p>
-			<a href="${pageContext.request.contextPath}/mserv">[トップに戻る]</a>
-		</p>
+        <div class="top-link">
+            <a href="${pageContext.request.contextPath}/mserv">トップに戻る</a>
+        </div>
 		<%-- contents end --%>
 	</div>
 	<div id="footerArea">

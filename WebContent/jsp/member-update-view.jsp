@@ -86,9 +86,13 @@
     <div id="mainArea">
         <h1>会員情報更新</h1>
         <div id="target">
-            <c:forEach var="errorMessage" items="${errorMessageList}" varStatus="status">
-                <p><c:out value="${errorMessage}" /></p>
-            </c:forEach>
+        <c:if test="${errorMessageList != null}">
+            <div id="target">
+                <c:forEach var="errorMessage" items="${errorMessageList}" varStatus="status">
+                    <p><c:out value="${errorMessage}" /></p>
+                </c:forEach>
+            </div>
+        </c:if>
         </div>
         <form method="post" action="${pageContext.request.contextPath}/mserv" id="chkForm">
             <table>
@@ -117,12 +121,17 @@
                     <td>電話番号</td>
                     <td><input type="text" name="phone" id="phone" value="${CommonLoginMember.phone}"></td>
                 </tr>
+               <tr>
+                    <td>現在のパスワード</td>
+                    <td><input type="password" name="currentPassword" id="currentPassword"></td>
+                </tr>
                 <tr>
-                    <td>パスワード</td>
-                    <td><input type="password" name="password" id="password"></td>
+                    <td>新しいパスワード</td>
+                    <td><input type="password" name="newPassword" id="newPassword"></td>
                 </tr>
             </table>
             <input type="hidden" name="flag" value="B0203UpdateMember">
+            <input type="hidden" name="checknull"  value="CheckNull">
             <div class="submit-button">
                 <input type="submit" value="確認">
             </div>
