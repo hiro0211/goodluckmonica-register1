@@ -1,8 +1,8 @@
 /**
- * jp.co.flm.market.web.B0102GoShoppingAction
- *
- * All Rights Reserved, Copyright Fujitsu Learning Media Limited
- */
+* jp.co.flm.market.web.B0102GoShoppingAction
+*
+* All Rights Reserved, Copyright Fujitsu Learning Media Limited
+*/
 package jp.co.flm.market.web;
 
 import java.util.ArrayList;
@@ -10,15 +10,17 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import jp.co.flm.market.common.MarketBusinessException;
+import jp.co.flm.market.entity.Member;
 import jp.co.flm.market.entity.Orders;
 import jp.co.flm.market.logic.ShoppingCartLogic;
 
 /**
- * 商品購入のためにログイン画面へ遷移するアクションクラスです。
- *
- * @author FLM
- * @version 1.0 YYYY/MM/DD
- */
+* 商品購入のためにログイン画面へ遷移するアクションクラスです。
+*
+* @author FLM
+* @version 1.0 YYYY/MM/DD
+*/
 public class B0102GoShoppingAction implements ActionIF{
 
     /**
@@ -75,6 +77,9 @@ public class B0102GoShoppingAction implements ActionIF{
             // ショッピングカートを取得する。
             ArrayList<Orders> cart = (ArrayList<Orders>) session.getAttribute("B01ShoppingCart");
 
+          //会員情報を取得する。
+            Member member = (Member) session.getAttribute("CommonLoginMember");
+
             // フォームで指定された注文数量を取得する。
             String[] qty = req.getParameterValues("productQty");
             int[] quantityList = new int[qty.length];
@@ -88,6 +93,8 @@ public class B0102GoShoppingAction implements ActionIF{
                 req.setAttribute("message", "ショッピングカートに商品がありません。");
                 page = "shopping-cart-view.jsp";
             } else {
+                try {
+                    if  (member == null) {
                 ShoppingCartLogic logic = new ShoppingCartLogic();
                 // ショッピングカートの注文数量を指定された数量に更新する。
                 cart = logic.updateCart(cart, quantityList);
@@ -96,10 +103,35 @@ public class B0102GoShoppingAction implements ActionIF{
                 session.setAttribute("B01ShoppingCart", cart);
 
                 page = "shopping-login-view.jsp";
-            }
+
+                    } else {
+                  ShoppingCartLogic logic = new ShoppingCartLogic();
+                   // ショッピングカートの注文数量を指定された数量に更新する。
+                   cart = logic.updateCart(cart, quantityList);
+
+                   // 最新の注文情報（小計金額、小計ポイント）が設定されたショッピングカートをセッションへ格納する。
+                   session.setAttribute("B01ShoppingCart", cart);
+
+                   page = "purchase-products-view.jsp";
+                    }
+
+            }catch(MarketBusinessException e){
+             // エラーメッセージを取得する。
+                String errorMessage = e.getMessage();
+
+                // リクエストスコープへエラーメッセージを格納する。
+                ArrayList<String> errorMessageList = new ArrayList<String>();
+                errorMessageList.add(errorMessage);
+                req.setAttribute("errorMessageList", errorMessageList);
+
+                page = "shopping-cart-view.jsp";
+          //購入数量が在庫数より少ない場合。
+
         }
 
+        }
+    }
         return page;
     }
-
 }
+

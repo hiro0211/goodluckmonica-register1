@@ -23,7 +23,7 @@ public class CommonLoginAction implements ActionIF{
      * @return 次画面のJSP名
      */
     public String execute(HttpServletRequest req) {
-
+        
         String page = "member-login-view.jsp";
 
         return page;

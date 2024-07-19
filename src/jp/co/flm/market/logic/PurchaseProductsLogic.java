@@ -74,6 +74,7 @@ public class PurchaseProductsLogic {
         return member;
     }
 
+
     /**
      * 注文処理を行うメソッド
      * @param cart ショッピングカートの注文リスト
@@ -95,7 +96,7 @@ public class PurchaseProductsLogic {
             insertOrder(order); // 注文の挿入
             selectStockForUpdate(order.getProduct().getProductId()); // 在庫の取得
             updateStock(order.getProduct().getProductId(), order.getQuantity()); // 在庫の更新
-            updateMemberPoint(order.getMemberId(), order.getProduct().getPoint()); // 会員ポイントの更新
+            updateMemberPoint(order.getMemberId(), order.getSubTotalPoint()); // 会員ポイントの更新
             }
 
            // トランザクションのコミット。データベースへの更新内容が反映が確定する

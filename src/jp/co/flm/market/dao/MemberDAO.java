@@ -49,7 +49,7 @@ public class MemberDAO {
         Member member = null;
 
         // SQL文の準備
-        String sql = "SELECT memberid, membername, gender, address, phone, memberpoint "
+        String sql = "SELECT memberid, membername, gender, address, phone, memberpoint, password "
             + "FROM member WHERE memberid=? AND password=?";
         PreparedStatement stmt = null;
         ResultSet res = null;
@@ -70,6 +70,7 @@ public class MemberDAO {
                 member.setAddress(res.getString("address"));
                 member.setPhone(res.getString("phone"));
                 member.setMemberPoint(res.getInt("memberpoint"));
+                member.setPassword(res.getString("password"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -235,6 +236,44 @@ public class MemberDAO {
                 stmt.close();
             }
         }
+    }
+
+    /**
+     * 現在のパスワードを検証する。
+     *
+     * @param memberId 会員ID
+     * @param password パスワード
+     * @return パスワードが正しい場合はtrue、そうでない場合はfalse
+     * @throws SQLException SQL例外
+     */
+    public boolean validatePassword(String memberId, String password) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM member WHERE memberid = ? AND password = ?";
+        PreparedStatement stmt = null;
+        ResultSet res = null;
+        boolean isValid = false;
+
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, memberId);
+            stmt.setString(2, password);
+            res = stmt.executeQuery();
+
+            if (res.next() && res.getInt(1) == 1) {
+                isValid = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (res != null) {
+                res.close();
+            }
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+
+        return isValid;
     }
 
 }

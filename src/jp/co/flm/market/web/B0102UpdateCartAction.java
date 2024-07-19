@@ -1,8 +1,8 @@
 /**
- * jp.co.flm.market.web.B0102UpdateCartAction
- *
- * All Rights Reserved, Copyright Fujitsu Learning Media Limited
- */
+* jp.co.flm.market.web.B0102UpdateCartAction
+*
+* All Rights Reserved, Copyright Fujitsu Learning Media Limited
+*/
 package jp.co.flm.market.web;
 
 import java.util.ArrayList;
@@ -10,15 +10,16 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import jp.co.flm.market.common.MarketBusinessException;
 import jp.co.flm.market.entity.Orders;
 import jp.co.flm.market.logic.ShoppingCartLogic;
 
 /**
- * 注文数量を更新し、ショッピングカート画面へ遷移するアクションクラスです。
- *
- * @author FLM
- * @version 1.0 YYYY/MM/DD
- */
+* 注文数量を更新し、ショッピングカート画面へ遷移するアクションクラスです。
+*
+* @author FLM
+* @version 1.0 YYYY/MM/DD
+*/
 public class B0102UpdateCartAction implements ActionIF{
 
     /**
@@ -87,6 +88,7 @@ public class B0102UpdateCartAction implements ActionIF{
                 // ショッピングカートが空である場合、メッセージをリクエストスコープへ格納する。
                 req.setAttribute("message", "ショッピングカートに商品がありません。");
             } else {
+                try {
                 ShoppingCartLogic logic = new ShoppingCartLogic();
                 // ショッピングカートの注文数量を指定された数量に更新する。
                 cart = logic.updateCart(cart, quantityList);
@@ -96,11 +98,23 @@ public class B0102UpdateCartAction implements ActionIF{
 
                 // ショッピングカートの注文数量を更新したことを伝えるメッセージを格納する。
                 req.setAttribute("message", "ショッピングカート内の注文数量を更新しました。");
+                page = "shopping-cart-view.jsp";
             }
 
-            page = "shopping-cart-view.jsp";
 
+            catch(MarketBusinessException e){
+             // エラーメッセージを取得する。
+                String errorMessage = e.getMessage();
+
+                // リクエストスコープへエラーメッセージを格納する。
+                ArrayList<String> errorMessageList = new ArrayList<String>();
+                errorMessageList.add(errorMessage);
+                req.setAttribute("errorMessageList", errorMessageList);
+
+                page = "shopping-cart-view.jsp";
+            }
         }
+    }
 
         return page;
     }

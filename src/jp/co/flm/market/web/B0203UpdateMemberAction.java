@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import jp.co.flm.market.common.MarketBusinessException;
 import jp.co.flm.market.common.MarketSystemException;
 import jp.co.flm.market.entity.Member;
+import jp.co.flm.market.logic.MemberInfoLogic;
 import jp.co.flm.market.logic.UpdateMemberLogic;
 
 public class B0203UpdateMemberAction implements ActionIF {
@@ -19,7 +20,8 @@ public class B0203UpdateMemberAction implements ActionIF {
         String gender = req.getParameter("gender");
         String address = req.getParameter("address");
         String phone = req.getParameter("phone");
-        String password = req.getParameter("password");
+        String currentPassword = req.getParameter("currentPassword");
+        String newPassword = req.getParameter("newPassword");
 
         // 入力チェック（空チェックと文字数チェック）
         if (memberName == null || memberName.length() == 0) {
@@ -44,10 +46,18 @@ public class B0203UpdateMemberAction implements ActionIF {
             errorMessageList.add("電話番号は13字以内で入力してください。");
         }
 
-        if (password == null || password.length() == 0) {
-            errorMessageList.add("パスワードは入力必須項目です。");
-        } else if (password.length() < 4 || password.length() > 8) {
-            errorMessageList.add("パスワードは4文字以上8文字以内で入力してください。");
+        if (phone != null && !phone.matches("^[0-9\\-]+$")) {
+            errorMessageList.add("電話番号は数字のみを入力してください。");
+        }
+
+        if (currentPassword == null || currentPassword.length() == 0) {
+            errorMessageList.add("現在のパスワードは入力必須項目です。");
+        }
+
+        if (newPassword == null || newPassword.length() == 0) {
+            errorMessageList.add("新しいパスワードは入力必須項目です。");
+        } else if (newPassword.length() < 4 || newPassword.length() > 8) {
+            errorMessageList.add("新しいパスワードは4文字以上8文字以内で入力してください。");
         }
 
         if (errorMessageList.size() != 0) {
@@ -61,32 +71,51 @@ public class B0203UpdateMemberAction implements ActionIF {
     public String execute(HttpServletRequest req) {
         String page = null;
 
-        page = validate(req);
+        // 会員更新の際、最初からエラー文が表示されるバグを防ぐため
+        String CheckNull = req.getParameter("checknull");
+
+        if (CheckNull != null ) {
+            page = validate(req);
+        } else {
+            page ="member-update-view.jsp";
+        }
 
         if (page == null) {
             try {
                 HttpSession session = req.getSession(false);
                 Member member = (Member) session.getAttribute("CommonLoginMember");
-                
+
                 // 更新する会員情報を取得する。
-                String password = req.getParameter("password");
+                String currentpassword = req.getParameter("currentPassword");
+                String newpassword = req.getParameter("newPassword");
                 String memberName = req.getParameter("memberName");
                 String gender = req.getParameter("gender");
                 String address = req.getParameter("address");
                 String phone = req.getParameter("phone");
+                String memberId =   member.getMemberId();
 
-                member.setPassword(password);
+                member.setPassword(newpassword);
                 member.setMemberName(memberName);
                 member.setGender(gender);
                 member.setAddress(address);
                 member.setPhone(phone);
 
                 UpdateMemberLogic logic = new UpdateMemberLogic();
-                logic.updateMember(member);
+                MemberInfoLogic infoLogic = new MemberInfoLogic();
+
+                Member memberPass  = infoLogic.getMember(memberId, currentpassword);
 
                 session.setAttribute("CommonLoginMember", member);
 
-                page = "member-update-result-view.jsp";
+                if (memberPass != null) {
+                    logic.updateMember(member);
+                    page = "member-update-result-view.jsp";
+                } else {
+                    ArrayList<String> errorMessageList = new ArrayList<String>();
+                    errorMessageList.add("今のパスワードが間違っています。");
+                    page = "error.jsp";
+                }
+
             } catch (MarketBusinessException e) {
                 ArrayList<String> errorMessageList = new ArrayList<String>();
                 errorMessageList.add(e.getMessage());

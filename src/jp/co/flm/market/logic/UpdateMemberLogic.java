@@ -10,6 +10,25 @@ import jp.co.flm.market.entity.Member;
 
 public class UpdateMemberLogic {
 
+    public boolean validatePassword(String memberId, String password) throws MarketSystemException {
+        Connection con = null;
+        try {
+            con = ConnectionManager.getConnection();
+            MemberDAO memberDAO = new MemberDAO(con);
+            return memberDAO.validatePassword(memberId, password);
+        } catch (SQLException e) {
+            throw new MarketSystemException("システムエラーが発生しました。システム管理者に連絡してください。");
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e2) {
+                throw new MarketSystemException("システムエラーが発生しました。システム管理者に連絡してください。");
+            }
+        }
+    }
+
     public void updateMember(Member member) throws MarketBusinessException, MarketSystemException {
         Connection con = null;
 

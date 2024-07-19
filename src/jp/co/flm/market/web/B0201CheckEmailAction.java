@@ -29,6 +29,11 @@ public class B0201CheckEmailAction implements ActionIF{
         if(memberId.length() == 0) {
             errorMessageList.add("メールアドレスは入力必須項目です。");
         }
+
+        if(memberId.length() >51) {
+            errorMessageList.add("メールアドレスは50字以内で入力してください。");
+        }
+
         //入力値を確認する（不正な文字が含まれているかどうか）
         String [] array ={"<" ,">" ," ' " ,"(", ")", "{", "}", "[", "]", "/", "*", "&","!", "%","#", "$", "\\", "\""};
         for (String n:array){
@@ -79,7 +84,7 @@ public class B0201CheckEmailAction implements ActionIF{
                member.setMemberId(memberId);
 
                //MemberオブジェクトをSessionキー"member"のセッションに格納
-               session.setAttribute("CommonLoginMember", member);
+               session.setAttribute("registerMember", member);
 
                page="member-register-view.jsp";
 

@@ -10,8 +10,11 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import jp.co.flm.market.common.MarketBusinessException;
 import jp.co.flm.market.common.MarketSystemException;
+import jp.co.flm.market.entity.Member;
 import jp.co.flm.market.entity.Orders;
+import jp.co.flm.market.logic.MemberInfoLogic;
 import jp.co.flm.market.logic.PurchaseProductsLogic;
 
 /**
@@ -80,6 +83,9 @@ public class B0103PurchaseCheckAction implements ActionIF{
             // ショッピングカートを取得する。
             ArrayList<Orders> cart = (ArrayList<Orders>) session.getAttribute("B01ShoppingCart");
 
+            //会員情報を取得する。
+            Member member = (Member) session.getAttribute("CommonLoginMember");
+
             // 商品情報の追加、会員情報の更新、在庫の更新を行う
             //引数が正しいかどうか確かめる
             PurchaseProductsLogic logic = new PurchaseProductsLogic();
@@ -90,9 +96,30 @@ public class B0103PurchaseCheckAction implements ActionIF{
             //カートセッションの中身を削除
             session.removeAttribute("B01ShoppingCart");
 
+            //新しい商品情報をゲットしてセッションに入れ直す。
+            MemberInfoLogic mlogic = new MemberInfoLogic();
+            ArrayList<Orders> orderList = mlogic.getOrderList(member.getMemberId());
 
-            //新しいポイント情報をゲットメンバーで呼び出してセッションに入れ直す。
+            //新しい商品情報をセッションスコープへ格納する。
+            session.setAttribute("orderList", orderList);
 
+          //新しいポイント情報をゲットメンバーで呼び出す。
+            Member mmember = logic.getMember(member.getMemberId(), member.getPassword());
+
+            //新しいポイント情報をセッションスコープへ格納する。
+            session.setAttribute("CommonLoginMember", mmember);
+
+
+        } catch (MarketBusinessException e) {
+            // エラーメッセージを取得する。
+            String errorMessage = e.getMessage();
+
+            // リクエストスコープへエラーメッセージを格納する。
+            ArrayList<String> errorMessageList = new ArrayList<String>();
+            errorMessageList.add(errorMessage);
+            req.setAttribute("errorMessageList", errorMessageList);
+
+            page = "error.jsp";
 
         } catch (MarketSystemException e) {
             // エラーメッセージを取得する。

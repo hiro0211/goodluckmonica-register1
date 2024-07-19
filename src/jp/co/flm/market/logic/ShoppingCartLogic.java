@@ -1,8 +1,8 @@
 /**
- * jp.co.flm.market.logic.ShoppingCartLogic
- *
- * All Rights Reserved, Copyright Fujitsu Learning Media Limited
- */
+* jp.co.flm.market.logic.ShoppingCartLogic
+*
+* All Rights Reserved, Copyright Fujitsu Learning Media Limited
+*/
 package jp.co.flm.market.logic;
 
 import java.sql.Connection;
@@ -17,11 +17,11 @@ import jp.co.flm.market.entity.Orders;
 import jp.co.flm.market.entity.Product;
 
 /**
- * ショッピングカートの業務クラスです。
- *
- * @author FLM
- * @version 1.0 YYYY/MM/DD
- */
+* ショッピングカートの業務クラスです。
+*
+* @author FLM
+* @version 1.0 YYYY/MM/DD
+*/
 public class ShoppingCartLogic {
 
     /**
@@ -44,7 +44,7 @@ public class ShoppingCartLogic {
         //在庫情報を調査：ゼロの場合エラーメッセージを格納
         if (product != null) {
             int stock = product.getStock().getQuantity(); // 在庫を取得
-            if (stock == 0) {
+            if (stock<1) {
                 throw new MarketBusinessException("商品" + product.getProductName() + " は在庫切れです。");
             }
         }
@@ -99,12 +99,22 @@ public class ShoppingCartLogic {
      *            注文数量のリスト
      * @return 注文数量が更新されたショッピングカート
      */
-    public ArrayList<Orders> updateCart(ArrayList<Orders> cart, int[] quantityList) {
+    public ArrayList<Orders> updateCart(ArrayList<Orders> cart, int[] quantityList) throws MarketBusinessException {
+{
+
 
         for (int i = 0; i < cart.size(); i++) {
             Orders order = cart.get(i);
             // カートの注文数量を更新する。
             order.setQuantity(quantityList[i]);
+
+         // 在庫数より多い場合はエラー
+            if (quantityList[i] > order.getProduct().getStock().getQuantity()) {
+            throw new MarketBusinessException("商品" + order.getProduct().getProductName() + " は"
+            + order.getProduct().getStock().getQuantity() + "個まで購入できます。"
+            + order.getProduct().getStock().getQuantity() + "個以内を指定してください。");
+            }
+
 
             // 小計金額、小計ポイントを更新する。
             order.setSubTotal(order.getProduct().getPrice() * quantityList[i]);
@@ -112,6 +122,7 @@ public class ShoppingCartLogic {
         }
 
         return cart;
+}
     }
 
     /**
